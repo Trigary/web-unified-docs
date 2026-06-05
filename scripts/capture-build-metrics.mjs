@@ -19,6 +19,14 @@ const EVENTS = [
 	'next-export',
 ]
 
+/**
+ * @typedef {Object} BuildEvent
+ * @property {string} name
+ * @property {number} duration
+ * @property {number} [timestamp]
+ * @property {string[]} tags
+ */
+
 async function readTraceFile(traceFilePath) {
 	const filepath = path.join(process.cwd(), traceFilePath)
 
@@ -36,6 +44,10 @@ async function readTraceFile(traceFilePath) {
 		.flat()
 }
 
+/**
+ * Submit build metrics to datadog
+ * @param {BuildEvent[]} metrics
+ */
 function captureMetric({ name, duration, timestamp, tags }) {
 	return {
 		host: '',
